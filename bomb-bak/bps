@@ -1,0 +1,15 @@
+break phase_1
+disable
+break phase_2
+disable
+break phase_3
+disable
+break phase_4
+disable
+break phase_5
+break phase_6
+break secret_phase
+break invalid_phase
+break phase_defused
+disable
+break explode_bomb
