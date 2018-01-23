@@ -7,7 +7,8 @@
 #include "show_bytes.h"
 
 void show_bytes(byte_pointer start, size_t len) {
-    for (int i = 0; i < len; i++) {
+    unsigned i;
+    for (i = 0; i < len; i++) {
         printf("%.2x ", *(start++));
     }
     printf("\n");
@@ -35,6 +36,23 @@ void show_double(double x) {
 
 void show_pointer(void *x) {
     show_bytes((byte_pointer) &x, sizeof(void *));
+}
+
+union f2u {
+    float f;
+    float_bits u;
+};
+
+float_bits float_to_float_bits(float f) {
+    union f2u x;
+    x.f = f;
+    return x.u;
+}
+
+float float_bits_to_float(float_bits u) {
+    union f2u x;
+    x.u = u;
+    return x.f;
 }
 
 /* int main(int argc, char** argv) { */
