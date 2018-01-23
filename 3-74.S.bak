@@ -1,0 +1,35 @@
+	  .global find_range
+	find_range:
+	  pushq   %rbx
+	  pushq   %r8
+	  pushq   %r9
+	  pushq   %r10
+	  pushq   %r11
+	  vxorps  %xmm1, %xmm1, %xmm1
+	  ucomiss %xmm1, %xmm0
+	  pushf
+	  popq    %rbx
+	  movq    %rbx, %r8
+	  movq    %rbx, %r9
+	  movq    %rbx, %r10
+	  andq    $0x01, %r8  # carry flag
+	  andq    $0x04, %r9  # parity flag
+	  andq    $0x40, %r10 # zero flag
+	  movq    $0x2, %r11  # positive case
+	  testq   %r10, %r10
+	  cmoveq  %r11, %rax
+	  movq    $0x1, %r11  # zero case
+	  testq   %r10, %r10
+	  cmovgq  %r11, %rax
+	  movq    $0x0, %r11  # negative case
+	  testq   %r8, %r8
+	  cmovlq  %r11, %rax
+	  movq    $0x3, %r11  # unordered case
+	  testq   %r9, %r9
+	  cmovpq  %r11, %rax
+	  popq    %r11        # cleanup
+	  popq    %r10
+	  popq    %r9
+	  popq    %r8
+	  popq    %rbx
+	  retq
